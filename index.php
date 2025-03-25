@@ -26,13 +26,19 @@
                 <div class="clear mb-3"></div>
                 <div class="col-md-4">
                     <button type="submit" class="btn btn-primary">Enviar Arquivo</button>
+                    <button type="reset" class="btn btn-danger d-none" id="clear-products">Limpar tabela</button>
                 </div>
             </div>
         </form>
+
+        <table class="table mt-5 d-none" id="products-table">
+            <thead id="products-head"></thead>
+            <tbody id="products-body"></tbody>
+        </table>
     </div>
 
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- <script src="public/js/script.js"></script> -->
+    <script src="public/js/script.js"></script>
 </body>
 </html>
