@@ -9,7 +9,7 @@
 <body>
     <div class="container mt-5">
         <h1 class="mb-4">Teste de Desenvolvimento PHP Soulmkt</h1>
-        <form action="" enctype="multipart/form-data">
+        <form id="csvForm" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-4">
                     <label for="csv_file" class="form-label">Selecione o arquivo CSV:</label>
