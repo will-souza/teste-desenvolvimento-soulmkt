@@ -3,6 +3,7 @@ namespace App\Models;
 class Csv {
     private $filePath;
     private $delimiter;
+    private $allowedKeys = ['codigo', 'nome', 'preco'];
 
     public function __construct(string $filePath, string $delimiter) {
         $this->filePath = $filePath;
@@ -44,8 +45,24 @@ class Csv {
     private function mapRow(array $header, array $row): array {
         $mapped = [];
         foreach ($header as $index => $key) {
-            $mapped[$key] = $row[$index] ?? null;
+            if (in_array($key, $this->allowedKeys)) {
+                $mapped[$key] = $row[$index] ?? null;
+            }
         }
+
+        if ($mapped) {
+            $mapped['copyAllowed'] = $this->isCopyAllowed($mapped['codigo']);
+            $mapped['isRedLine'] = $this->isNegativeNumber($mapped['preco']);
+        }
+        
         return $mapped;
+    }
+
+    private function isCopyAllowed($value): bool {
+        return preg_match('/[02468]/', $value) === 1;
+    }
+
+    private function isNegativeNumber($value): bool {
+        return preg_replace('/[^0-9-]|-(?=.*-)/', '', $value) < 0;
     }
 }
