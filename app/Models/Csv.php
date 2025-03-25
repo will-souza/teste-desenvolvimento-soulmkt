@@ -34,6 +34,10 @@ class Csv {
             fclose($handle);
         }
 
+        usort($data, function($a, $b) {
+            return strcmp($a['nome'], $b['nome']);
+        });
+
         return $data;
     }
 
