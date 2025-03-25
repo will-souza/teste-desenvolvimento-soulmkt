@@ -6,11 +6,22 @@ use App\Models\Csv;
 
 class UploadController {
     public function handleUpload(array $file, string $delimiter) {
-        $uploader = new Uploader($file);
+        try {
+            $uploader = new Uploader($file);
+            $uploader->validate();
 
-        $csv = new Csv($uploader->getTempPath(), $delimiter);
-        $data = $csv->process();
+            $csv = new Csv($uploader->getTempPath(), $delimiter);
+            $data = $csv->process();
 
-        return json_encode($data, JSON_PRETTY_PRINT);
+            return [
+                'status' => 'success',
+                'data' => $data,
+            ];
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ];
+        }
     }
 }
