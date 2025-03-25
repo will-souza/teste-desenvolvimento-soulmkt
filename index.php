@@ -31,7 +31,7 @@
             </div>
         </form>
 
-        <table class="table mt-5 d-none" id="products-table">
+        <table class="table table-striped table-hover mt-5 d-none" id="products-table">
             <thead id="products-head"></thead>
             <tbody id="products-body"></tbody>
         </table>

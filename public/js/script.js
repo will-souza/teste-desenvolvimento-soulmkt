@@ -33,7 +33,9 @@ jQuery(function ($) {
             
             const previewData = data.slice(0, 20);
             previewData.forEach(row => {
+                const price = currencyToNumber(row.preco);
                 let rowHtml = '<tr>';
+                if (price < 0) rowHtml = '<tr class="table-danger">';
                 headers.forEach(h => rowHtml += `<td>${row[h] || ''}</td>`);
                 rowHtml += '</tr>';
                 $('#products-body').append(rowHtml);
@@ -44,7 +46,7 @@ jQuery(function ($) {
         }
 
         $('#clear-products').on('click', function() {
-            clearProducts();
+            clearProducts()
         });
 
         function clearProducts() {
@@ -52,6 +54,13 @@ jQuery(function ($) {
             $('#products-body').empty();
             
             $('#clear-products').addClass('d-none');
+        }
+
+        function currencyToNumber(currency) {
+            if (currency) {
+                return Number(currency.replace(/[^0-9.-]+/g,""));
+            }
+            return 0;
         }
     })
 });
