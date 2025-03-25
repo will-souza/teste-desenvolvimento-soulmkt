@@ -1,0 +1,24 @@
+{
+  "name": "teste-desenvolvimento-soulmkt",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/will-souza/teste-desenvolvimento-soulmkt#readme",
+  "bugs": {
+    "url": "https://github.com/will-souza/teste-desenvolvimento-soulmkt/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/will-souza/teste-desenvolvimento-soulmkt.git"
+  },
+  "license": "ISC",
+  "author": "William Souza",
+  "type": "commonjs",
+  "main": "public/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "jquery": "^3.7.1"
+  }
+}
