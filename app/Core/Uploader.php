@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Core;
+
 class Uploader {
     private $file;
     private $allowedTypes = ['text/csv', 'text/plain', 'application/csv'];
@@ -11,15 +13,15 @@ class Uploader {
 
     public function validate(): bool {
         if ($this->file['error'] !== UPLOAD_ERR_OK) {
-            throw new RuntimeException('Erro no envio do arquivo');
+            throw new \RuntimeException('Erro no envio do arquivo');
         }
 
         if ($this->file['size'] > $this->maxSize) {
-            throw new LengthException('Arquivo ultrapassa o limite de tamanho permitido (10MB)');
+            throw new \LengthException('Arquivo ultrapassa o limite de tamanho permitido (10MB)');
         }
 
         if (!in_array($this->getMimeType(), $this->allowedTypes)) {
-            throw new InvalidArgumentException('Formato de arquivo inválido, apenas CSV.');
+            throw new \InvalidArgumentException('Formato de arquivo inválido, apenas CSV.');
         }
 
         return true;

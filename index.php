@@ -9,7 +9,7 @@
 <body>
     <div class="container mt-5">
         <h1 class="mb-4">Teste de Desenvolvimento PHP Soulmkt</h1>
-        <form id="csvForm" enctype="multipart/form-data">
+        <form id="csvForm" action="upload.php" enctype="multipart/form-data" method="POST">
             <div class="row">
                 <div class="col-md-4">
                     <label for="csv_file" class="form-label">Selecione o arquivo CSV:</label>
@@ -33,6 +33,6 @@
 
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="public/js/script.js"></script>
+    <!-- <script src="public/js/script.js"></script> -->
 </body>
 </html>
