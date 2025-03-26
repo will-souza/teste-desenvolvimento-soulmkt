@@ -22,31 +22,70 @@ jQuery(function ($) {
 
         function showProducts(data) {
             if (data.length === 0) return;
-
             clearProducts();
             
-            const headers = Object.keys(data[0]);
             const allowedHeaders = ['codigo', 'nome', 'preco'];
+            const headers = Object.keys(data[0]).filter(header => {
+                return allowedHeaders.includes(header);
+            });
+
+            const previewData = data.slice(0, 20);
+
             let headRow = '<tr>';
+
             headers.forEach(function(h) {
-                console.log(h);
                 if (allowedHeaders.includes(h)) {
                     headRow += `<th>${h}</th>`;
                 }
             });
+
+
             headRow += '</tr>';
+
+
             $('#products-head').html(headRow);
+            $('#products-head > tr').append('<th>opções</th>');
             
-            const previewData = data.slice(0, 20);
+
             previewData.forEach(row => {
-                const filteredRow = filterProductObject(row)                
+                const filteredRow = filterProductObject(row)
 
-                let rowHtml = '<tr>';
-                if (row.isRedLine) rowHtml = '<tr class="table-danger">';
-                headers.forEach(h => rowHtml += `<td>${filteredRow[h] || ''}</td>`);
-                rowHtml += '</tr>';
+                let tr = $('<tr>', {
+                    class: row.isRedLine ? 'table-danger' : ''
+                });
 
-                $('#products-body').append(rowHtml);
+                let copyButton = $('<button>', {
+                    text: 'Copiar JSON',
+                    class: 'btn btn-primary',
+                }).attr('data-json', JSON.stringify(filteredRow));
+
+                headers.forEach(h => {
+                    tr.append($('<td>', {
+                        text: filteredRow[h] || '',
+                    }))
+                });
+
+                let tdOptions = $('<td>').append(copyButton);
+                row.copyAllowed ? tr.append(tdOptions) : tr.append($('<td>'));
+
+                $('#products-body').append(tr);
+
+                copyButton.on('click', function() {
+                    const dataJson = $(this).attr('data-json');
+
+                    try {
+                        navigator.clipboard.writeText(dataJson);
+
+                        $(this).removeClass('btn-primary');
+                        $(this).addClass('btn-success');
+                        $(this).text('Copiado!');
+                    } catch (err) {
+                        $(this).removeClass('btn-primary');
+                        $(this).addClass('btn-danger');
+                        $(this).text('Erro!');
+                    }
+                })
+
             });
             
             $('#products-table').removeClass('d-none');
@@ -66,10 +105,14 @@ jQuery(function ($) {
 
         function filterProductObject(product) {
             return {
-              codigo: product.codigo,
-              nome: product.nome,
-              preco: product.preco
+                codigo: product.codigo,
+                nome: product.nome,
+                preco: product.preco
             };
-          }
+        }
+
+        function copyButton(dataRow) {
+            return 
+        }
     })
 });
