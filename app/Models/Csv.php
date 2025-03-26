@@ -50,6 +50,11 @@ class Csv {
         if (empty($data)) {
             throw new \UnexpectedValueException('Nenhum registro encontrado, verifique se o delimitador está correto');
         }
+
+        if (count(array_intersect($this->allowedKeys, $header)) != count($this->allowedKeys)) {
+            throw new \UnexpectedValueException('O arquivo CSV deve conter as colunas codigo, nome e preco.');
+        }
+
         return $data;
     }
 
