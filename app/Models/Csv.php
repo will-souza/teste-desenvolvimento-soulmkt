@@ -19,26 +19,37 @@ class Csv {
         $header = [];
         $lineNumber = 0;
 
-        if (($handle = fopen($this->filePath, 'r')) !== false) {
-            while (($row = fgetcsv($handle, 0, $this->delimiter)) !== false) {
-                $lineNumber++;
-                
-                if (empty(array_filter($row))) continue;
-
-                if ($lineNumber === 1) {
-                    $header = $row;
-                    continue;
+        try {
+            if (($handle = fopen($this->filePath, 'r')) !== false) {
+                while (($row = fgetcsv($handle, 0, $this->delimiter)) !== false) {
+                    $lineNumber++;
+                    
+                    if (empty(array_filter($row))) continue;
+    
+                    if ($lineNumber === 1) {
+                        $header = $row;
+                        continue;
+                    }
+    
+                    $dataRow = $this->mapRow($header, $row);
+    
+                    if (!empty($dataRow)) {
+                        $data[] = $this->mapRow($header, $row);
+                    }
                 }
-
-                $data[] = $this->mapRow($header, $row);
+                fclose($handle);
             }
-            fclose($handle);
+        } catch (\Exception $e) {
+            throw new \RuntimeException($e->getMessage());
         }
 
         usort($data, function($a, $b) {
             return strcmp($a['nome'], $b['nome']);
         });
 
+        if (empty($data)) {
+            throw new \UnexpectedValueException('Nenhum registro encontrado, verifique se o delimitador está correto');
+        }
         return $data;
     }
 
@@ -50,11 +61,11 @@ class Csv {
             }
         }
 
-        if ($mapped) {
+        if (!empty($mapped)) {
             $mapped['copyAllowed'] = $this->isCopyAllowed($mapped['codigo']);
             $mapped['isRedLine'] = $this->isNegativeNumber($mapped['preco']);
         }
-        
+
         return $mapped;
     }
 

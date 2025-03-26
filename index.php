@@ -31,6 +31,8 @@
             </div>
         </form>
 
+        <div class="alert alert-danger mt-3 mb-3 d-none" id="product-alert" role="alert"></div>
+
         <table class="table table-striped table-hover mt-5 d-none" id="products-table">
             <thead id="products-head"></thead>
             <tbody id="products-body"></tbody>

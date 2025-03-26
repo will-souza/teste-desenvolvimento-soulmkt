@@ -18,10 +18,7 @@ class UploadController {
                 'data' => $data,
             ];
         } catch (\Exception $e) {
-            return [
-                'status' => 'error',
-                'message' => $e->getMessage()
-            ];
+            throw new \Exception($e->getMessage());
         }
     }
 }

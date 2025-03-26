@@ -16,7 +16,9 @@ jQuery(function ($) {
             },
             error: function(xhr) {
                 let error = JSON.parse(xhr.responseText);
-                console.log(error.message);
+                clearProducts();
+                $('#product-alert').removeClass('d-none');
+                $('#product-alert').text(error.message);
             }
         });
 
@@ -97,6 +99,7 @@ jQuery(function ($) {
         });
 
         function clearProducts() {
+            $('#product-alert').addClass('d-none');
             $('#products-head').empty();
             $('#products-body').empty();
             
@@ -109,10 +112,6 @@ jQuery(function ($) {
                 nome: product.nome,
                 preco: product.preco
             };
-        }
-
-        function copyButton(dataRow) {
-            return 
         }
     })
 });
