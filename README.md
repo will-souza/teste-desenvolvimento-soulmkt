@@ -77,5 +77,11 @@ Produto A,ABC123,R$ 10,99
 Produto B,XYZ456,R$ -5,50
 ```
 
+## 🧪 Testes
+Execute os testes com:
+```bash
+./vendor/bin/phpunit tests/
+```
+
 ## 📄 Licença
 Este projeto é para fins de avaliação técnica.
