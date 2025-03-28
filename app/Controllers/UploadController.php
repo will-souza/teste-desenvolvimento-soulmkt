@@ -7,10 +7,10 @@ use App\Models\Csv;
 class UploadController {
     public function handleUpload(array $file, string $delimiter) {
         try {
-            $uploader = new Uploader($file);
+            $uploader = $this->createUploader($file);
             $uploader->validate();
 
-            $csv = new Csv($uploader->getTempPath(), $delimiter);
+            $csv = $this->createCsv($uploader->getTempPath(), $delimiter);
             $data = $csv->process();
 
             return [
@@ -20,5 +20,15 @@ class UploadController {
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
+    }
+    
+    protected function createUploader(array $file): Uploader
+    {
+        return new Uploader($file);
+    }
+    
+    protected function createCsv(string $path, string $delimiter): Csv
+    {
+        return new Csv($path, $delimiter);
     }
 }

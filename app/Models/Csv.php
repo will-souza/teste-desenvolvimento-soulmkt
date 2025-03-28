@@ -1,4 +1,8 @@
 <?php
+/**
+ * @uses App\Models\Csv
+ */
+
 namespace App\Models;
 class Csv {
     private $filePath;
@@ -67,8 +71,8 @@ class Csv {
         }
 
         if (!empty($mapped)) {
-            $mapped['copyAllowed'] = $this->isCopyAllowed($mapped['codigo']);
-            $mapped['isRedLine'] = $this->isNegativeNumber($mapped['preco']);
+            $mapped['copyAllowed'] = array_key_exists('codigo', $mapped) ? $this->isCopyAllowed($mapped['codigo']) : false;
+            $mapped['isRedLine'] = array_key_exists('preco', $mapped) ? $this->isNegativeNumber($mapped['preco']) : false;
         }
 
         return $mapped;
@@ -80,5 +84,15 @@ class Csv {
 
     private function isNegativeNumber($value): bool {
         return preg_replace('/[^0-9-]|-(?=.*-)/', '', $value) < 0;
+    }
+
+    public function setFilePath(string $filePath): void
+    {
+        $this->filePath = $filePath;
+    }
+
+    public function setDelimiter(string $delimiter): void
+    {
+        $this->delimiter = $delimiter;
     }
 }
