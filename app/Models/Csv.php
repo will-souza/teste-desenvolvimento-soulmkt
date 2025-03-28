@@ -85,14 +85,4 @@ class Csv {
     private function isNegativeNumber($value): bool {
         return preg_replace('/[^0-9-]|-(?=.*-)/', '', $value) < 0;
     }
-
-    public function setFilePath(string $filePath): void
-    {
-        $this->filePath = $filePath;
-    }
-
-    public function setDelimiter(string $delimiter): void
-    {
-        $this->delimiter = $delimiter;
-    }
 }
